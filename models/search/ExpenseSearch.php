@@ -18,14 +18,16 @@ class ExpenseSearch extends Model
     public $id;
     public $category_id;
     public $amount;
-    public $created_at;
+    public $date_from;
+    public $date_to;
 
 
     public function rules()
     {
         return [
-            [['id','category_id','created_at'], 'integer'],
-            [['amount'], 'string']
+            [['id','category_id'], 'integer'],
+            [['amount'], 'string'],
+            [['date_from', 'date_to'],'date','format' => 'php:Y-m-d'],
         ];
     }
 
@@ -55,9 +57,11 @@ class ExpenseSearch extends Model
         $query->andFilterWhere([
             'id' => $this->id,
             'category_id' => $this->category_id,
-            'created_at' => $this->created_at,
             'amount' => $this->amount,
         ]);
+
+        $query->andFilterWhere(['>=', 'created_at', $this->date_from ? strtotime($this->date_from . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'created_at', $this->date_to ? strtotime($this->date_to . ' 23:59:59') : null]);
 
         $query->orderBy('created_at DESC');
 

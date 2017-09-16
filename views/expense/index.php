@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
 use app\source\entities\Expense;
+use kartik\date\DatePicker;
 
 
 /* @var $this yii\web\View */
@@ -46,10 +47,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'created_at',
-                        'value' => function (Expense $model) {
-                            return date("d-M-Y", $model->created_at);
+                        'filter' => DatePicker::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'date_from',
+                            'attribute2' => 'date_to',
+                            'type' => DatePicker::TYPE_RANGE,
+                            'separator' => '-',
+                            'pluginOptions' => [
+                                'todayHighlight' => true,
+                                'autoclose'=>true,
+                                'format' => 'yyyy-mm-dd',
+                                'weekStart' => 1,
+                            ],
+                        ]),
+                        'value' => function(Expense $model) {
+                            return date("d M Y", $model->created_at);
                         },
-                        'contentOptions' => ['style' => 'width: 180px; max-width: 180px;'],
+                        //'format' => 'datetime',
+                        'contentOptions' => ['style' => 'width: 250px; max-width: 250px;'],
                     ],
                     ['class' => ActionColumn::class],
                 ],
