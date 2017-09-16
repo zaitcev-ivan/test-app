@@ -2,13 +2,16 @@
 
 namespace app\controllers;
 
+use app\source\entities\Expense;
 use app\source\forms\ExpenseCreateForm;
+use app\source\forms\ExpenseEditForm;
 use Yii;
 use yii\web\Controller;
 use app\source\services\ExpenseService;
 use app\models\search\ExpenseSearch;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 class ExpenseController extends Controller
 {
@@ -74,5 +77,34 @@ class ExpenseController extends Controller
         return $this->render('create', [
             'model' => $form,
         ]);
+    }
+
+    public function actionUpdate($id)
+    {
+        $expense = $this->findModel($id);
+        $form = new ExpenseEditForm($expense);
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->service->edit($form, $expense->id, Yii::$app->user->id);
+                Yii::$app->session->setFlash('success', 'Расход изменен');
+                return $this->redirect(['index']);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('update', [
+            'model' => $form,
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = Expense::findOne(['id' => $id,'user_id' => Yii::$app->user->id])) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Запрашиваемая страница не существует');
+        }
     }
 }
