@@ -59,6 +59,8 @@ class ExpenseSearch extends Model
             'amount' => $this->amount,
         ]);
 
+        $query->orderBy('created_at DESC');
+
         return $dataProvider;
     }
 

@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'created_at',
                         'value' => function (Expense $model) {
-                            return $model->created_at;
+                            return date("d-M-Y", $model->created_at);
                         },
                         'contentOptions' => ['style' => 'width: 180px; max-width: 180px;'],
                     ],
