@@ -45,7 +45,7 @@ class Expense extends ActiveRecord
 
     public function convertToFloat($amount)
     {
-        return (float)$amount;
+        return round((float)$amount,2);
     }
 
     /**
