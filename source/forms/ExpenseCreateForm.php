@@ -3,6 +3,9 @@
 namespace app\source\forms;
 
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
+use app\source\entities\Category;
+use Yii;
 
 class ExpenseCreateForm extends Model
 {
@@ -21,8 +24,13 @@ class ExpenseCreateForm extends Model
     {
         return [
             [['category_id','amount','created_at'], 'required'],
-            [['category_id','created_at'], 'integer'],
-            [['amount'], 'string']
+            [['category_id'], 'integer'],
+            [['amount','created_at'], 'safe']
         ];
+    }
+
+    public function categoriesList(): array
+    {
+        return ArrayHelper::map(Category::find()->where(['user_id'=>Yii::$app->user->id])->asArray()->all(), 'id', 'name');
     }
 }
