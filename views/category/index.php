@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\ActionColumn;
 
@@ -12,6 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
 
+    <p>
+        <?= Html::a('Создать новую категорию', ['create'], ['class' => 'btn btn-primary']) ?>
+    </p>
     <div class="box">
         <div class="box-body">
             <?= GridView::widget([

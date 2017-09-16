@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\source\forms\CategoryCreateForm;
 use Yii;
 use app\models\search\CategorySearch;
 use yii\web\Controller;
@@ -52,6 +53,26 @@ class CategoryController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCreate()
+    {
+        $form = new CategoryCreateForm();
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->service->create($form, Yii::$app->user->id);
+                Yii::$app->session->setFlash('success', 'Новая категория создана');
+                return $this->redirect(['index']);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+
+        return $this->render('create', [
+            'model' => $form,
         ]);
     }
 }
