@@ -100,6 +100,22 @@ class CategoryController extends Controller
     }
 
     /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $category = $this->findModel($id);
+        try {
+            $this->service->remove($category);
+            Yii::$app->session->setFlash('success', 'Категория удалена');
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['index']);
+    }
+
+    /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
