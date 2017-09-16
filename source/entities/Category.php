@@ -32,6 +32,11 @@ class Category extends ActiveRecord
         $this->name = $name;
     }
 
+    public function isUserAssign($userId): bool
+    {
+        return $this->user_id === $userId;
+    }
+
     /**
      * @inheritdoc
      */

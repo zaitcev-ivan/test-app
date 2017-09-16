@@ -29,7 +29,9 @@ class ExpenseService
     {
         $category = $this->categories->get($form->category_id);
         $user = $this->users->get($userId);
-
+        if(!$category->isUserAssign($userId)) {
+            throw new \DomainException('Ошибка в выборе категории расхода');
+        }
         $expense = Expense::create($user->id,$category->id,$form->created_at,$form->amount);
 
         $this->expenses->save($expense);
