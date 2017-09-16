@@ -48,6 +48,12 @@ class ExpenseService
         $this->expenses->save($expense);
     }
 
+    public function remove($expenseId): void
+    {
+        $expense = $this->expenses->get($expenseId);
+        $this->expenses->remove($expense);
+    }
+
     protected function checkUsersCategory(Category $category, $userId): void
     {
         if(!$category->isUserAssign($userId)) {

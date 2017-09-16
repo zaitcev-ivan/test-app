@@ -99,6 +99,18 @@ class ExpenseController extends Controller
         ]);
     }
 
+    public function actionDelete($id)
+    {
+        $expense = $this->findModel($id);
+        try {
+            $this->service->remove($expense->id);
+            Yii::$app->session->setFlash('success', 'Расход удален');
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['index']);
+    }
+
     protected function findModel($id)
     {
         if (($model = Expense::findOne(['id' => $id,'user_id' => Yii::$app->user->id])) !== null) {
