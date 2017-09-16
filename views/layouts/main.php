@@ -37,14 +37,17 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/site/index']],
-        ['label' => 'О сайте', 'url' => ['/site/about']],
-        ['label' => 'Контакты', 'url' => ['/contact/index']],
     ];
     if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'О сайте', 'url' => ['/site/about']];
+        $menuItems[] = ['label' => 'Контакты', 'url' => ['/contact/index']];
         $menuItems[] = ['label' => 'Регистрация', 'url' => ['signup/request']];
         $menuItems[] = ['label' => 'Вход', 'url' => ['auth/login']];
     } else {
         $menuItems[] = ['label' => 'Категории', 'url' => ['category/index']];
+        $menuItems[] = ['label' => 'Расходы', 'url' => ['expense/index']];
+        $menuItems[] = ['label' => 'О сайте', 'url' => ['/site/about']];
+        $menuItems[] = ['label' => 'Контакты', 'url' => ['/contact/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['auth/logout'], 'post')
             . Html::submitButton(
@@ -54,6 +57,7 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
