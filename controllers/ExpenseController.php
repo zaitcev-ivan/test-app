@@ -59,6 +59,12 @@ class ExpenseController extends Controller
         ]);
     }
 
+    public function actionView($id)
+    {
+        $expense = $this->findModel($id);
+        return $this->redirect(['update', 'id' => $expense->id]);
+    }
+
     public function actionCreate()
     {
         $form = new ExpenseCreateForm();
