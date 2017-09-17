@@ -14,6 +14,11 @@ class SettingsRepository
         return $settings;
     }
 
+    public function getByUserId($userId): Settings
+    {
+        return $this->getBy(['user_id' => $userId]);
+    }
+
     public function save(Settings $settings): void
     {
         if (!$settings->save()) {

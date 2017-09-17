@@ -46,6 +46,7 @@ AppAsset::register($this);
     } else {
         $menuItems[] = ['label' => 'Категории', 'url' => ['category/index']];
         $menuItems[] = ['label' => 'Расходы', 'url' => ['expense/index']];
+        $menuItems[] = ['label' => 'Настройки', 'url' => ['settings/index']];
         $menuItems[] = ['label' => 'О сайте', 'url' => ['/site/about']];
         $menuItems[] = ['label' => 'Контакты', 'url' => ['/contact/index']];
         $menuItems[] = '<li>'

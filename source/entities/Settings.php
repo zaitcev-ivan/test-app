@@ -2,6 +2,7 @@
 
 namespace app\source\entities;
 
+use app\source\helpers\SettingsHelper;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
 use app\source\services\dto\SettingsDto;
@@ -18,6 +19,10 @@ use app\source\services\dto\SettingsDto;
  */
 class Settings extends ActiveRecord
 {
+
+    const SCENARIO_ADAPTIVE = 1;
+    const SCENARIO_INCREMENT = 2;
+
     public static function create(SettingsDto $dto, $userId): self
     {
         $settings = new static();
@@ -26,6 +31,15 @@ class Settings extends ActiveRecord
         $settings->user_id = $userId;
 
         return $settings;
+    }
+
+    public function edit($limitSum, $scenario)
+    {
+        $this->editLimitSum($limitSum);
+        if(!SettingsHelper::isScenarioExist($scenario)) {
+            $scenario = self::SCENARIO_ADAPTIVE;
+        }
+        $this->editScenario($scenario);
     }
 
     public function editLimitSum($limitSum)
