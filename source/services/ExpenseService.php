@@ -62,11 +62,20 @@ class ExpenseService
             $exceptionMessage = "Расход сохранен, но предельная сумма этого месяца (". $settings->limit_sum ." руб) превышена на ". $overflowSum ." руб";
             switch($settings->scenario) {
                 case Settings::SCENARIO_ADAPTIVE:
+                    $nextMonthDate = $limit->getNextMonth($form->created_at);
+                    if(!$nextLimit = $this->limits->getByUserAndDate($user->id,$nextMonthDate)) {
+                        $nextLimit = Limit::create($user->id,$nextMonthDate, $settings->limit_sum,0);
+                    }
+                    else {
+                        $overflowSum = $form->amount;
+                    }
+                    $nextLimit->decLimit($overflowSum);
+                    $this->limits->save($nextLimit);
                     throw new LimitsException($exceptionMessage . ",  предельный порог следующего месяца уменьшится на превышеную сумму");
-                    break;
+                break;
                 case Settings::SCENARIO_INCREMENT:
                     throw new LimitsException($exceptionMessage . ", необходимо увеличить предельный порог");
-                    break;
+                break;
             }
         }
     }

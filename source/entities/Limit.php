@@ -42,6 +42,14 @@ class Limit extends ActiveRecord
         }
     }
 
+    public function decLimit($amount)
+    {
+        $this->limit_sum -= $amount;
+        if($this->limit_sum < 0) {
+            $this->limit_sum = 0;
+        }
+    }
+
     public function isOverflow(): bool
     {
         return $this->current_sum > $this->limit_sum;
@@ -50,6 +58,20 @@ class Limit extends ActiveRecord
     public function getOverflowSum()
     {
         return $this->current_sum - $this->limit_sum;
+    }
+
+    public function getNextMonth($currentDate)
+    {
+        $currentDate = strtotime($currentDate);
+        $nextDate = mktime(
+            date('H',$currentDate),
+            date('i',$currentDate),
+            date('s',$currentDate),
+            date('m',$currentDate)+1,
+            date('d',$currentDate),
+            date('Y',$currentDate)
+        );
+        return date("d-m-Y", $nextDate);
     }
 
     public static function tableName()
