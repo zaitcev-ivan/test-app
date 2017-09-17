@@ -41,8 +41,13 @@ class ReportController extends Controller
 
     public function actionMonthly()
     {
-        $report = $this->service->createMonthlyReport(Yii::$app->user->id);
-
+        try {
+            $report = $this->service->createMonthlyReport(Yii::$app->user->id);
+        } catch (\Exception $e) {
+            Yii::$app->errorHandler->logException($e);
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->redirect(['expense/index']);
+        }
         return $this->render('monthly', [
             'report' => $report,
         ]);
@@ -50,8 +55,13 @@ class ReportController extends Controller
 
     public function actionSelectMonth()
     {
-        $months = $this->service->selectAllMonth(Yii::$app->user->id);
-
+        try {
+            $months = $this->service->selectAllMonth(Yii::$app->user->id);
+        } catch (\Exception $e) {
+            Yii::$app->errorHandler->logException($e);
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->redirect(['expense/index']);
+        }
         return $this->render('select-month', [
             'months' => $months,
         ]);
