@@ -42,6 +42,16 @@ class Limit extends ActiveRecord
         }
     }
 
+    public function isOverflow(): bool
+    {
+        return $this->current_sum > $this->limit_sum;
+    }
+
+    public function getOverflowSum()
+    {
+        return $this->current_sum - $this->limit_sum;
+    }
+
     public static function tableName()
     {
         return '{{%limits}}';

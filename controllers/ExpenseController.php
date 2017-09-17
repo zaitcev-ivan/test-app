@@ -77,6 +77,7 @@ class ExpenseController extends Controller
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
+                return $this->redirect(['index']);
             }
         }
 

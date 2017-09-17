@@ -5,6 +5,7 @@ namespace app\source\services;
 use app\source\entities\Category;
 use app\source\entities\Expense;
 use app\source\entities\Limit;
+use app\source\entities\Settings;
 use app\source\forms\ExpenseCreateForm;
 use app\source\forms\ExpenseEditForm;
 use app\source\repositories\ExpenseRepository;
@@ -55,6 +56,19 @@ class ExpenseService
             $this->expenses->save($expense);
             $this->limits->save($limit);
         });
+
+        if($limit->isOverflow()) {
+            $overflowSum = $limit->getOverflowSum();
+            $exceptionMessage = "Расход сохранен, но предельная сумма этого месяца (". $settings->limit_sum ." руб) превышена на ". $overflowSum ." руб";
+            switch($settings->scenario) {
+                case Settings::SCENARIO_ADAPTIVE:
+                    throw new LimitsException($exceptionMessage . ",  предельный порог следующего месяца уменьшится на превышеную сумму");
+                    break;
+                case Settings::SCENARIO_INCREMENT:
+                    throw new LimitsException($exceptionMessage . ", необходимо увеличить предельный порог");
+                    break;
+            }
+        }
     }
 
     public function edit(ExpenseEditForm $form, $expenseId, $userId): void
