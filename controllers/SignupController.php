@@ -7,6 +7,7 @@ use yii\web\Controller;
 use app\source\services\SignupService;
 use yii\filters\AccessControl;
 use app\source\forms\SignupForm;
+use app\source\services\dto\SettingsDto;
 
 class SignupController extends Controller
 {
@@ -43,7 +44,12 @@ class SignupController extends Controller
         $form = new SignupForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $this->service->signup($form);
+                $settings = new SettingsDto(
+                    Yii::$app->params['settings.limitSum'],
+                    Yii::$app->params['settings.scenario'],
+                    null
+                );
+                $this->service->signup($form, $settings);
                 Yii::$app->session->setFlash('success', 'Вы успешно зарегистрировались, заполните форму входа');
                 return $this->redirect(['site/index']);
             } catch (\DomainException $e) {

@@ -4,6 +4,7 @@ namespace app\source\entities;
 
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use app\source\services\dto\SettingsDto;
 
 /**
  * Class Settings
@@ -17,12 +18,12 @@ use yii\db\ActiveQuery;
  */
 class Settings extends ActiveRecord
 {
-    public static function create($limitSum, $scenario, $userId): self
+    public static function create(SettingsDto $dto): self
     {
         $settings = new static();
-        $settings->limit_sum = $limitSum;
-        $settings->scenario = $scenario;
-        $settings->user_id = $userId;
+        $settings->limit_sum = $dto->limitSum;
+        $settings->scenario = $dto->scenario;
+        $settings->user_id = $dto->userId;
 
         return $settings;
     }
