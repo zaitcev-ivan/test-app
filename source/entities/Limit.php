@@ -90,4 +90,14 @@ class Limit extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => '#id',
+            'limit_sum' => 'Предельная сумма',
+            'current_sum' => 'Текущая сумма',
+            'created_at' => 'Месяц',
+        ];
+    }
 }

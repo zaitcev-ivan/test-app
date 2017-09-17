@@ -26,7 +26,13 @@ class LimitEditForm extends Model
     {
         return [
             [['limit_sum'], 'required'],
+        ];
+    }
 
+    public function attributeLabels()
+    {
+        return [
+            'limit_sum' => 'Предельная сумма',
         ];
     }
 }

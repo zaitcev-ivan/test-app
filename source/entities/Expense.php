@@ -65,4 +65,14 @@ class Expense extends ActiveRecord
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => '#id',
+            'category_id' => 'Категория',
+            'created_at' => 'Дата создания',
+            'amount' => 'Расход',
+        ];
+    }
 }

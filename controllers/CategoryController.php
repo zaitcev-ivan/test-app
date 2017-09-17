@@ -79,6 +79,12 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function actionView($id)
+    {
+        $category = $this->findModel($id);
+        return $this->redirect(['update', 'id' => $category->id]);
+    }
+
     public function actionUpdate($id)
     {
         $category = $this->findModel($id);

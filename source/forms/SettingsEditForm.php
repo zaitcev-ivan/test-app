@@ -30,4 +30,12 @@ class SettingsEditForm extends Model
             [['limit_sum', 'scenario'], 'integer'],
         ];
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'scenario' => 'Сценарий превышения предела',
+            'limit_sum' => 'Предельная сумма',
+        ];
+    }
 }

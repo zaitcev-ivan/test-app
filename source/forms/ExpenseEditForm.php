@@ -42,4 +42,14 @@ class ExpenseEditForm extends Model
     {
         return ArrayHelper::map(Category::find()->where(['user_id'=>Yii::$app->user->id])->asArray()->all(), 'id', 'name');
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => '#id',
+            'category_id' => 'Категория',
+            'created_at' => 'Дата создания',
+            'amount' => 'Сумма расхода',
+        ];
+    }
 }

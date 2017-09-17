@@ -61,4 +61,12 @@ class Settings extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'scenario' => 'Сценарий превышения предела',
+            'limit_sum' => 'Предельная сумма',
+        ];
+    }
 }

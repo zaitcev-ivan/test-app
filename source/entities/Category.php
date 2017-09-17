@@ -49,4 +49,12 @@ class Category extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => '#id',
+            'name' => 'Название',
+        ];
+    }
 }

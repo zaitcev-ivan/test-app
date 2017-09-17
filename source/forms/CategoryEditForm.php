@@ -29,4 +29,11 @@ class CategoryEditForm extends Model
             ['name', 'string', 'max' => 255],
         ];
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Название',
+        ];
+    }
 }
