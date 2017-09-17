@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Учет расходов',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -40,7 +40,6 @@ AppAsset::register($this);
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'О сайте', 'url' => ['/site/about']];
-        $menuItems[] = ['label' => 'Контакты', 'url' => ['/contact/index']];
         $menuItems[] = ['label' => 'Регистрация', 'url' => ['signup/request']];
         $menuItems[] = ['label' => 'Вход', 'url' => ['auth/login']];
     } else {
@@ -53,7 +52,6 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Настройки', 'url' => ['settings/index']];
         $menuItems[] = ['label' => 'Предельные суммы', 'url' => ['limit/index']];
         $menuItems[] = ['label' => 'О сайте', 'url' => ['/site/about']];
-        $menuItems[] = ['label' => 'Контакты', 'url' => ['/contact/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['auth/logout'], 'post')
             . Html::submitButton(
@@ -82,7 +80,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Учет расходов <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
