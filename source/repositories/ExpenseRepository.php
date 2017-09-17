@@ -29,6 +29,56 @@ class ExpenseRepository
         return $expense;
     }
 
+    public function getAllByUserByDay($userId, $month): array
+    {
+        if (!$expense = Expense::find()
+            ->select(['strftime("%d-%m-%Y", datetime(created_at, \'unixepoch\', \'localtime\')) as group_date, SUM(amount) as amount'])
+            ->groupBy ('group_date')
+            ->andWhere(['strftime("%m-%Y", datetime(created_at, \'unixepoch\', \'localtime\'))' => $month])
+            ->andWhere(['user_id' => $userId])
+            ->orderBy('created_at DESC')
+            ->all()
+        )
+        {
+            throw new NotFoundException('Расходы не найдены');
+        }
+        return $expense;
+    }
+
+    public function getAllMonthsByUser($userId): array
+    {
+        if (!$expense = Expense::find()
+            ->select(['strftime("%m-%Y", datetime(created_at, \'unixepoch\', \'localtime\')) as group_date'])
+            ->groupBy ('group_date')
+            ->andWhere(['user_id' => $userId])
+            ->orderBy('created_at DESC')
+            ->all()
+        )
+        {
+            throw new NotFoundException('Расходы не найдены');
+        }
+        return $expense;
+    }
+
+    public function getByCategory($userId,$categoryId,$date)
+    {
+        $amount = 0;
+        /* @var $expense \app\source\entities\Expense */
+        if($expense = Expense::find()
+            ->select(['strftime("%d-%m-%Y", datetime(created_at, \'unixepoch\', \'localtime\')) as group_date, SUM(amount) as amount'])
+            ->groupBy ('group_date')
+            ->andWhere(['strftime("%d-%m-%Y", datetime(created_at, \'unixepoch\', \'localtime\'))' => $date])
+            ->andWhere(['user_id' => $userId])
+            ->andWhere(['category_id' => $categoryId])
+            ->limit(1)
+            ->one()
+        )
+        {
+            $amount = $expense->amount;
+        }
+        return $amount;
+    }
+
     public function save(Expense $expense): void
     {
         if (!$expense->save()) {

@@ -47,4 +47,26 @@ class ReportController extends Controller
             'report' => $report,
         ]);
     }
+
+    public function actionSelectMonth()
+    {
+        $months = $this->service->selectAllMonth(Yii::$app->user->id);
+
+        return $this->render('select-month', [
+            'months' => $months,
+        ]);
+    }
+
+    public function actionDetail($month = 0)
+    {
+        if($month == 0) {
+            return $this->redirect(['select-month']);
+        }
+
+        $report = $this->service->createDetailReport($month, Yii::$app->user->id);
+
+        return $this->render('detail', [
+            'report' => $report,
+        ]);
+    }
 }

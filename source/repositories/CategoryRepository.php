@@ -14,6 +14,14 @@ class CategoryRepository
         return $category;
     }
 
+    public function getByUser($userId): array
+    {
+        if (!$category = Category::find()->andWhere(['user_id' => $userId])->all()) {
+            throw new NotFoundException('Категории не найдены');
+        }
+        return $category;
+    }
+
     public function save(Category $category): void
     {
         if (!$category->save()) {
