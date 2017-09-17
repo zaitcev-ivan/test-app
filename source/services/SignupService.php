@@ -37,8 +37,7 @@ class SignupService
 
         $this->transaction->wrap(function () use ($user, $settingsDto) {
             $this->users->save($user);
-            $settingsDto->userId = $user->id;
-            $settings = Settings::create($settingsDto);
+            $settings = Settings::create($settingsDto, $user->id);
             $this->settings->save($settings);
         });
 

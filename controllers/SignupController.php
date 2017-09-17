@@ -46,8 +46,7 @@ class SignupController extends Controller
             try {
                 $settings = new SettingsDto(
                     Yii::$app->params['settings.limitSum'],
-                    Yii::$app->params['settings.scenario'],
-                    null
+                    Yii::$app->params['settings.scenario']
                 );
                 $this->service->signup($form, $settings);
                 Yii::$app->session->setFlash('success', 'Вы успешно зарегистрировались, заполните форму входа');

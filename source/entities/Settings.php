@@ -18,12 +18,12 @@ use app\source\services\dto\SettingsDto;
  */
 class Settings extends ActiveRecord
 {
-    public static function create(SettingsDto $dto): self
+    public static function create(SettingsDto $dto, $userId): self
     {
         $settings = new static();
         $settings->limit_sum = $dto->limitSum;
         $settings->scenario = $dto->scenario;
-        $settings->user_id = $dto->userId;
+        $settings->user_id = $userId;
 
         return $settings;
     }

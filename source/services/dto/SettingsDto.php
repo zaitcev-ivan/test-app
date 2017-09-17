@@ -6,12 +6,10 @@ class SettingsDto
 {
     public $limitSum;
     public $scenario;
-    public $userId;
 
-    public function __construct($limitSum, $scenario, $userId)
+    public function __construct($limitSum, $scenario)
     {
         $this->limitSum = $limitSum;
         $this->scenario = $scenario;
-        $this->userId = $userId;
     }
 }
