@@ -22,6 +22,12 @@ class LimitRepository
         return $limit;
     }
 
+    public function getByUserAndDate($userId, $date)
+    {
+        $date = date("m-Y",strtotime($date));
+        return Limit::find()->andWhere(['user_id' => $userId,'date' => $date])->limit(1)->one();
+    }
+
     public function save(Limit $limit): void
     {
         if (!$limit->save()) {

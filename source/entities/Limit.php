@@ -23,10 +23,23 @@ class Limit extends ActiveRecord
     {
         $limit = new static();
         $limit->user_id = $userId;
-        $limit->date = $date;
+        $limit->date = date("m-Y",strtotime($date));
         $limit->limit_sum = $limitSum;
         $limit->current_sum = $currentSum;
         return $limit;
+    }
+
+    public function addAmount($amount)
+    {
+        $this->current_sum += $amount;
+    }
+
+    public function removeAmount($amount)
+    {
+        $this->current_sum -= $amount;
+        if($this->current_sum < 0) {
+            $this->current_sum = 0;
+        }
     }
 
     public static function tableName()
