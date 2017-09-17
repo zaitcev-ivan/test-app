@@ -19,7 +19,7 @@ use yii\db\ActiveQuery;
  */
 class Expense extends ActiveRecord
 {
-
+    public $group_date;
     public static function create($userId, $categoryId, $createdAt, $amount): self
     {
         $expense = new static();
