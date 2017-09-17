@@ -42,6 +42,13 @@ class Limit extends ActiveRecord
         }
     }
 
+    public function editLimit($amount)
+    {
+        if($amount > 0) {
+            $this->limit_sum = $amount;
+        }
+    }
+
     public function decLimit($amount)
     {
         $this->limit_sum -= $amount;

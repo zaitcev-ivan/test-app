@@ -51,6 +51,7 @@ AppAsset::register($this);
             ['label' => 'Отчет по месяцам', 'url' => ['report/select-month']],
         ]];
         $menuItems[] = ['label' => 'Настройки', 'url' => ['settings/index']];
+        $menuItems[] = ['label' => 'Предельные суммы', 'url' => ['limit/index']];
         $menuItems[] = ['label' => 'О сайте', 'url' => ['/site/about']];
         $menuItems[] = ['label' => 'Контакты', 'url' => ['/contact/index']];
         $menuItems[] = '<li>'
